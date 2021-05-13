@@ -10,15 +10,15 @@ import { HeaderComponent } from './header/header.component';
   declarations: [
     BreadcrumbsComponent,
     SidebarComponent,
-    HeaderComponent
-  ],
-  imports: [
-    CommonModule
+    HeaderComponent,
   ],
   exports: [
     BreadcrumbsComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+  ],
+  imports: [
+    CommonModule
   ]
 })
 export class SharedModule { }

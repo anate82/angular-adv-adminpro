@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-nopagefound',
   templateUrl: './nopagefound.component.html',
-  styleUrls:['./nopagefound.component.css']
+  styleUrls: [ './nopagefound.component.css' ]
 })
 export class NopagefoundComponent {
 
-  year: number = new Date().getFullYear();
+  year = new Date().getFullYear();
 
 }
