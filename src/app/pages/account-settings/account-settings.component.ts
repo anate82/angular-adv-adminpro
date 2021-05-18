@@ -7,17 +7,20 @@ import { SettingsService } from '../../services/settings.service';
   styles: [
   ]
 })
-export class AccountSettingsComponent implements OnInit{
- 
-  constructor(private settingsService: SettingsService) {
-  }
+export class AccountSettingsComponent implements OnInit {
+
+  constructor( private settingsService: SettingsService  ) {}
 
   ngOnInit(): void {
     this.settingsService.checkCurrentTheme();
   }
-  
-  changeTheme(theme: string) {
-    this.settingsService.changeTheme(theme);
+
+  changeTheme( theme: string ) {
+        
+    this.settingsService.changeTheme( theme );
+    
   }
+
+  
 
 }
