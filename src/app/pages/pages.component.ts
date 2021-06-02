@@ -15,7 +15,7 @@ export class PagesComponent implements OnInit {
   public date: String = "";
   constructor(private settingsService: SettingsService) {
     this.date = new Date().getFullYear().toString();
-   }
+  }
 
   ngOnInit(): void {
     customInitFunction();

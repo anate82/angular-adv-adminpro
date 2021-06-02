@@ -62,14 +62,16 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   buscar(termino: string) {
+    let usuarios:any = [];
     if (termino.length === 0) {
       this.usuarios = this.usuariosTemp;
       return;
     }
     this.busquedasService.buscar('usuarios', termino)
-      .subscribe(resp => {
-        this.usuarios=resp
-      })
+      .subscribe((resp) => {
+        usuarios = resp;
+        this.usuarios = usuarios;
+      });
   }
 
   eliminarUsuarios(usuario: Usuario) {
@@ -105,6 +107,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       })
   }
   abrirModal(usuario: Usuario) {
-    this.modalImagenService.abrirModal('usuarios',usuario.uid!,usuario.img);
+    this.modalImagenService.abrirModal('usuarios',usuario.uid!,usuario.img!);
   }
 }
