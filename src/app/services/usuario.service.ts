@@ -27,12 +27,20 @@ export class UsuarioService {
   get uid(): string{
     return this.usuario.uid || '';
   }
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE'{
+    return this.usuario.role!;
+  }
   get headers() {
     return {
       headers: {
         'x-token': this.token
       }
     }
+  }
+
+  guardarLocalStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
   }
 
   validarToken():Observable<boolean> {
@@ -44,7 +52,7 @@ export class UsuarioService {
         map((resp: any) => {
           const { role,google,nombre,email,img,uid } = resp.usuario;
           this.usuario = new Usuario(nombre, email, '', role, google, img, uid);
-          localStorage.setItem('token', resp.token)
+          this.guardarLocalStorage(resp.token, resp.menu);
           return true
         }),
         catchError(err => of(false))
@@ -54,8 +62,8 @@ export class UsuarioService {
   crearUsuario(formData: RegisterForm) {
     return this.http.post(`${base_url}/usuarios`, formData)
       .pipe(
-        tap((resp:any) => {
-          localStorage.setItem('token',resp.token)         
+        tap((resp: any) => {
+          this.guardarLocalStorage(resp.token, resp.menu);
         })
       );
   }
@@ -72,7 +80,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login`, formData)
       .pipe(
         tap((resp:any) => {
-          localStorage.setItem('token',resp.token)         
+          this.guardarLocalStorage(resp.token, resp.menu);
         })
       );
   }
@@ -81,7 +89,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login/google`, {token})
       .pipe(
         tap((resp:any) => {
-          localStorage.setItem('token',resp.token)         
+          this.guardarLocalStorage(resp.token, resp.menu);
         })
       );
   }
@@ -100,12 +108,15 @@ export class UsuarioService {
   }
 
   logOut() {
+
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     this.auth2.signOut().then(() => {
       this.ngZone.run(()=>{
         this.router.navigateByUrl('/login');
       });
     });
+
   }
 
   cargarUsuarios(desde:number=0) {

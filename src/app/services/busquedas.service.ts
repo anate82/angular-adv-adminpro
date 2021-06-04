@@ -54,4 +54,8 @@ export class BusquedasService {
       )
   }
 
+  busquedaGlobal(termino: string) {
+    return this.http.get(`${base_url}/todo/${termino}`, this.headers);
+  }
+
 }
